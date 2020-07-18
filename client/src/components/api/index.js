@@ -69,6 +69,10 @@ export default {
 			return onErrorCallback('[getBars] Invalid interval');
 		}
 
+		if (Number(from) < 0 ) {
+			from = Number(from)*(-1);
+		}
+
         let id = symbolInfo.id;
         console.log(id + '  ' + interval + '  ' + from + '  ' + to );
         const candles = await getCandles( id, interval, Number(from)*1000000000 );
@@ -83,12 +87,15 @@ export default {
 	// subscribeBars: (symbolInfo, interval, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback) => {
 	// 	console.log('[subscribeBars]: Method call with subscribeUID:', subscribeUID);
 
-	// 	subscribeKline({ symbol: symbolInfo.name, interval, uniqueID: subscribeUID, }, cb => onRealtimeCallback(cb))
+	// 	subscribeKline( { symbol: symbolInfo.id, interval, uniqueID: subscribeUID, }, cb => onRealtimeCallback(cb) )
 	// },
+
+	// subscription to real-time updates
 	// unsubscribeBars: (subscriberUID) => {
 	// 	console.log('[unsubscribeBars]: Method call with subscriberUID:', subscriberUID);
 	// 	unsubscribeKline(subscriberUID)
 	// },
+
 	getServerTime: (callback) => {
 		getVegaTime().then(time => {
 			console.log(time);

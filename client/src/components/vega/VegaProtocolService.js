@@ -143,7 +143,7 @@ class VegaProtocolService {
     }
   }    
 
-  // #NOT WORKING
+  // WORKING
     async get_candles_by_market_id(id,timestamp,intervals) {
       let async_url = '/markets/' + id + '/candles';
       let responsebody = {'sinceTimestamp':timestamp,'interval':intervals,};

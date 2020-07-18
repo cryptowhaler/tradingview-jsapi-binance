@@ -90,12 +90,7 @@ function formatingCandles (time, open, high, low, close, volume, datetime, inter
 
 export async function getCandles(symbolID, interval, from, to) {
 	interval = intervals[interval]; // set interval
-	// id = '';
-	// for (let i=0;i<markets.length;i++) {
-	// 	if (symbol == markets[i].name) {
-	// 		id = markets[i].id;
-	// 	}
-	// }
+
 	console.log(symbolID + '   ' + interval);
 	let candles = await VegaProtocolService.get_candles_by_market_id(symbolID,from,interval);
 	
@@ -103,24 +98,19 @@ export async function getCandles(symbolID, interval, from, to) {
 	for (let i=0;i<candles.data.candles.length;i++) {
 		res.push(formatingCandles(candles.data.candles[i].timestamp, candles.data.candles[i].open,candles.data.candles[i].high, candles.data.candles[i].low, candles.data.candles[i].close, candles.data.candles[i].volume ) )
 	}
-		// .then(res => {
-		// 	console.log(res);
-		// 	const arr = res.map(i => formatingCandles(i));
 	console.log(res);
 	return res;
 		
 }
 
-// export const checkInterval = (interval) => !!intervals[interval]
 
-
-// export const subscribeKline = ({ symbol, interval, uniqueID }, callback) => {
-// 	interval = intervals[interval] // set interval
-// 	return api.stream.kline({ symbol, interval, uniqueID }, res => {
-// 		const candle = formatingKline(res.kline)
-// 		callback(candle)
-// 	})
-// }
+export const subscribeKline = ({ symbol, interval, uniqueID }, callback) => {
+	interval = intervals[interval] // set interval
+	return api.stream.kline({ symbol, interval, uniqueID }, res => {
+		const candle = formatingKline(res.kline)
+		callback(candle)
+	})
+}
 
 // export const unsubscribeKline = (uniqueID) => {
 // 	return api.stream.close.kline({ uniqueID })
